@@ -2,8 +2,8 @@
 title: "edi3 JSON-LD NDR 1.0 Specification"
 specID: "json-ld-ndr/1"
 status: "![raw](http://rfc.unprotocols.org/spec:2/COSS/raw.svg)"
-editors: "[Steven Capell](mailto:steve.capell@gmail.com)"
-contributors: 
+editors: "[Nis Jespersen](mailto:nis.jespersen@maerskgtd.com)"
+contributors: "[Steven Capell](mailto:steve.capell@gmail.com)"
 ---
 
 ## Introduction
@@ -16,11 +16,12 @@ This sections illustrates an example of how data is linked via
 The below is a data object which could be passed in the request or reply of an API call. 
 
 ```
-	{
-		"@context": "http://edi3.org/cefact-bsp.jsonld",
-		"consignment": {
-			"identification": "https://www.maersk.com/tracking/#tracking/123456789",
-			"includedConsignmentItem": [
+{
+	"@context": "http://edi3.org/cefact-bsp.jsonld",
+	"consignment": {
+		"identification": "https://www.maersk.com/tracking/#tracking/123456789",
+		"includedConsignmentItem": [
+			{
 				"consignmentItem": {
 					"information": "Mangos and bananas",
 					"grossWeight": {
@@ -28,17 +29,20 @@ The below is a data object which could be passed in the request or reply of an A
 						"Unit": "Kgs"
 					}
 				}
-			],
-			"utilizedTransportEquipment": [
+			}
+		],
+		"utilizedTransportEquipment": [
+			{
 				"transportEquipment": {
-					"identification": "https://app.bic-boxtech.org/container/MSKU0134962",
+					"identification": "https://app.bic-boxtech.org/containers?search=MSKU0134962",
 					"affixedSeal": {
 						"identification": "54234398"
 					}
 				}
-			]
-		}
+			}
+		]
 	}
+}
 ```
 
 This JSON object specifies a Consignment and its ConsignmentItem and TransportEquipment. The Consignment is identified by a bookingnumber via linkage to Maersk, who in the role of carrier has issued the booking number. The TransportEquipment number is governed by BIC, available through their boxtech API. 
@@ -52,12 +56,12 @@ The json-ld context file defines the semantics of the elements of the payload js
 {
 	"@context": {
 		"consignment": { 
-			"@id": "http://edi3.org/contexts/Consignment",  
+			"@id": "https://edi3.org/specs/edi3-transport/develop/vocab/Consignment",  
 			"@type": "@id" 
 		},
-		"consignmentItem": "edi3.org/contexts/ConsignmentItem",
+		"consignmentItem": "https://edi3.org/specs/edi3-transport/develop/vocab/ConsignmentItem",
 		"transportEquipment": {
-			"@id": "http://edi3.org/contexts/TransportEquipment", 
+			"@id": "https://edi3.org/specs/edi3-transport/develop/vocab/TransportEquipment", 
 			"@type": "@id" 
 		}
 	}
