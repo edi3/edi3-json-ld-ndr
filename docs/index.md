@@ -14,11 +14,7 @@ Machines build “knowledge graphs” by linking data together. This is done by 
 * The author's name is Nis. 
 * Nis lives in Denmark.
 
-From this, a machine would be able to build this kind of simple knowledge graph: 
-
-<img src="../resources/simple_knowledge_graph.png" width="232" height="36">
-
-And by parsing it, determine for example that "the author lives in Denmark".
+From this, a machine would be able to build this kind of simple knowledge graph: Author - name is - Nis - lives in - Denmark. And by parsing this graph, determine for example that "the author lives in Denmark".
 
 All subjects, predicates and (some) objects are identified on the web by a IRI (Uniform Resource Identifier). An IRI identifies _the thing_, as opposed to a URL which locates a page describing the _the thing_. While this is important to machines, there can be a bit of a clash here as to how humans best read data. For example `<https://schema.org/author> <https://schema.org/givenName> Nis.` is hardly as readable as ”Presenter’s name is Nis”. 
 
@@ -70,9 +66,9 @@ The `@context` links to a jsonld file, defining the semantic meaning of each ele
 			"@id": "https://edi3.org/specs/edi3-transport/develop/vocab/Consignment",
 			"@type": "@id"
 		},
-  	"includedConsignmentItem": "https://edi3.org/specs/edi3-transport/develop/vocab/Consignment#ConsignmentItem",
+  		"includedConsignmentItem": "https://edi3.org/specs/edi3-transport/develop/vocab/Consignment#ConsignmentItem",
 		"consignmentItem": "https://edi3.org/specs/edi3-transport/develop/vocab/ConsignmentItem",
-  	"utilizedTransportEquipment": "https://edi3.org/specs/edi3-transport/develop/vocab/Consignment#utilizedTransportEquipment",
+  		"utilizedTransportEquipment": "https://edi3.org/specs/edi3-transport/develop/vocab/Consignment#utilizedTransportEquipment",
 		"transportEquipment": {
 			"@id": "https://edi3.org/specs/edi3-transport/develop/vocab/TransportEquipment",
 			"@type": "@id"
