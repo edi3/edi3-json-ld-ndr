@@ -1,7 +1,7 @@
 ---
 title: "edi3 JSON-LD NDR 1.0 Specification"
 specID: "json-ld-ndr/1"
-status: "![raw](http://rfc.unprotocols.org/spec:2/COSS/raw.svg)"
+status: "![raw](https://rfc.unprotocols.org/spec:2/COSS/raw.svg)"
 editors: "[Nis Jespersen](mailto:nis.jespersen@maerskgtd.com)"
 contributors: "[Steven Capell](mailto:steve.capell@gmail.com)"
 ---
@@ -132,9 +132,9 @@ For example, the following legacy JSON (which is much less aligned to CEFACT) wi
 Common semantics are defined many places throughout the internet. A very relevant example is https://schema.org/ which is extensively used for common stuff like defining Person, Address, Name and many other such fundamental aspects. More specialized semantics typically require specialized governance. In the case of trade and transport, that governance is CEFACT. In order to enable the web developers of the world to utilize our semantics, part of the edi3 ambition is to expose our semantics in a referenceable way as a library of IRIs. 
 
 These are some simple examples of how this could look for the three classes referenced in the above examples: 
-* https://edi3.org/specs/edi3-transport/develop/vocab/Consignment
-* https://edi3.org/specs/edi3-transport/develop/vocab/ConsignmentItem
-* https://edi3.org/specs/edi3-transport/develop/vocab/TransportEquipment
+* [https://edi3.org/specs/edi3-transport/develop/vocab/Consignment](https://edi3.org/specs/edi3-transport/develop/vocab/Consignment)
+* [https://edi3.org/specs/edi3-transport/develop/vocab/ConsignmentItem](https://edi3.org/specs/edi3-transport/develop/vocab/ConsignmentItem)
+* [https://edi3.org/specs/edi3-transport/develop/vocab/TransportEquipment](https://edi3.org/specs/edi3-transport/develop/vocab/TransportEquipment)
 
 This should obviously be generated from the SCRDM model, part of the output of the RDM2API methodology. Similarly, the governance of the various high level groupings (in these examples /edi3-transport) should follow the town plan approach. 
 
