@@ -13,3 +13,5 @@ Reference implementation: Not yet available
 Test suite: Not yet available
 
 Live test endpoint: Not yet available
+
+[How to contribute](https://edi3.org/github/)
