@@ -1,13 +1,15 @@
 # edi3 JSON-LD NDR Specification
 
- * [Version 1.0](/docs/1.0/index.md)
- 
-Specification: [JSON-LD NDR 1.0](http://edi3.org/specs/edi3-json-ld-ndr/1.0/)
+[Specification](http://edi3.org/specs/edi3-json-ld-ndr/develop/) (latest working draft)
 
-Community discussion/support: [edi3.org](http://edi3.org)
+[Project administration](https://github.com/edi3/edi3-json-ld-ndr/wiki)
 
-Open source reference implementation: 
+[Mailing List](https://groups.google.com/a/edi3.org/forum/#!forum/json-ld-ndr/join)
 
-Test suite: 
+[Discussion channel](https://app.slack.com/client/TDWTCC83F/CE7LSPWBS) (slack channel)
 
-Live test endpoint: 
+Reference implementation: Not yet available
+
+Test suite: Not yet available
+
+Live test endpoint: Not yet available
