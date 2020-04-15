@@ -6,6 +6,37 @@ editors: "[Nis Jespersen](mailto:nis.jespersen@maerskgtd.com)"
 contributors: "[Steven Capell](mailto:steve.capell@gmail.com)"
 ---
 
+## Status
+
+Raw
+
+
+## Glossary
+
+Phrase | Definition
+------------ | -------------
+|
+
+This service depends on - TBA.
+
+The TBA specification depends on this document. Note, TBA.
+ 
+## Licence
+
+All material published on edi3.org including all parts of this specification are the intellectual property of the UN as per the [UN/CEFACT IPR Policy](https://www.unece.org/fileadmin/DAM/cefact/cf_plenary/plenary12/ECE_TRADE_C_CEFACT_2010_20_Rev2E_UpdatedIPRpolicy.pdf).
+
+This Specification is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version. See http://www.gnu.org/licenses.
+ 
+## Change Process
+
+ This document is governed by the [2/COSS](http://rfc.unprotocols.org/spec:2/COSS/) (COSS).
+
+## Language
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" 
+in this document are to be interpreted as described in RFC 2119.
+
+
 # Introduction
 The JSON-LD project aims to let not just humans, but also machines understand the semantics of CEFACT. 
 
@@ -137,43 +168,6 @@ These are some simple examples of how this could look for the three classes refe
 * https://edi3.org/specs/edi3-transport/develop/vocab/TransportEquipment
 
 This should obviously be generated from the SCRDM model, part of the output of the RDM2API methodology. Similarly, the governance of the various high level groupings (in these examples /edi3-transport) should follow the town plan approach. 
-
-
-
-## Status
-
-
-
-## Glossary
-
-Phrase | Definition
------------- | -------------
-|
-
-This service depends on - TBA.
-
-The TBA specification depends on this document. Note, TBA.
- 
-## Licence
-
-All material published on edi3.org including all parts of this specification are the intellectual property of the UN as per the [UN/CEFACT IPR Policy](https://www.unece.org/fileadmin/DAM/cefact/cf_plenary/plenary12/ECE_TRADE_C_CEFACT_2010_20_Rev2E_UpdatedIPRpolicy.pdf).
-
-This Specification is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version. See http://www.gnu.org/licenses.
- 
-## Change Process
-
- This document is governed by the [2/COSS](http://rfc.unprotocols.org/spec:2/COSS/) (COSS).
-
-## Language
-
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" 
-in this document are to be interpreted as described in RFC 2119.
-
-# Billing Process
-
-
-
-## State Lifecycle
 
 
  
