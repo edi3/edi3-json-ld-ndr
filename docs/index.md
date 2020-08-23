@@ -157,19 +157,58 @@ For example, the following legacy JSON (which is much less aligned to CEFACT) wi
 }
 ```
 
-# EDI3 JSON-LD Project Output
-Common semantics are defined many places throughout the internet. A very relevant example is https://schema.org/ which is extensively used for common stuff like defining Person, Address, Name and many other such fundamental aspects. More specialized semantics typically require specialized governance. In the case of trade and transport, that governance is CEFACT. In order to enable the web developers of the world to utilize our semantics, part of the edi3 ambition is to expose our semantics in a referenceable way as a library of IRIs. 
+# Requirements
+
+This specification is part of a suite of documents that collectively provids the neccessary tools and methods for data modellers to produce high quality API designs based on UN/CEFACT semantics.
+
+The UN/CEFACT vocabulary is currently published as a CSV file (the reference data models) and variously as CSV, XML, PDF or HTML (the code lists).  The core piurpose of this specification is to define the naming and design rules for consistent publishing of both the reference data models and code lists as JSON-LD vocuabularies. This is the foundation specification that makes UN/CEFACT semantics accessible and consumable for web developers. This specification will have achieved it’s purpose when UN semantics are published and consumable in a similar way to other well established vocabularies such as schema.org.  
+
+Within this primary goal, there are several more detailed requirements
+
+1. unambiguous. The NDR must define unambiguous rules for publishing UN/CEFACT constructs such as ABIEs, ASBIES, BBIEs, etc as JSON-LD vocabulary constructs.
+2. governed. The UN/CEFACT RDMs and code lists are updated on a regular basis (roughly once per 6 months). The JSON-LD publishing process should allow updates to the vocuabulary (not a new duplicated vocabulary) at each version increment. 
+3. developer freindly. The published output must be redable and consumable by any developer that is familiar with JSON-LD and should no require any understanding of UN/CEFACT library management terms and processes (eg they should not need to know what an ABIE is). Schema.org provides the most widely used JSON-LD vocabulary in use today and so is a good guide for what the published UN/CEFACT output should look like.
+4. de-duplication. In JSON-LD a "property" such as "consignment.consignor"is a primary entity and has attributes like "domain" (ie which classes may include this proiperty) and "range" (ie what is the value domain of this property). In the UN/CEFACT RDMs the "class" is the primary entity and properties can only belong to a class. Furthermore it is common for the RDM to define several version of the same class intended for use in different contexts (eg "consignment" and "referenced.consignment"). There is usually significant overlap between the properties of these classes. This means that the same semantic vocabulary item occurs multiple times. The JSON-LD vocabulary must de-duplicate without losing the usage context.
+5. what else?
+
+# Naming & Design Rules
+
+## RDM mapping
+
+Stuff about ABIE/BBIE etc -> JSON-LD here
+
+## Code list representation
+
+Stuff about representation of simple (ie name value/pair) and complex (ie multi-attribute / hierarchical) code lists here
+
+## @context granularity
+
+Stuff about granularity of graph publishing here - ie one graph per serpately goverened thing in the source 
+
+## primary @id mapping
+
+stuff about mapping entity ID to JSON-LD @id here
+
+## de-duplication
+
+stuff about de-duplication of properties here
+
+## versioning
+
+stuff about  version updates here
+
+## UN/CEFACT metadtaa
+
+stuff about publishing source metadata without corrupting the primary "schema.org style" here
+
+ 
+# Examples
+
 
 These are some simple examples of how this could look for the three classes referenced in the above examples: 
 * [https://edi3.org/specs/edi3-transport/develop/vocab/Consignment](https://edi3.org/specs/edi3-transport/develop/vocab/Consignment)
 * [https://edi3.org/specs/edi3-transport/develop/vocab/ConsignmentItem](https://edi3.org/specs/edi3-transport/develop/vocab/ConsignmentItem)
 * [https://edi3.org/specs/edi3-transport/develop/vocab/TransportEquipment](https://edi3.org/specs/edi3-transport/develop/vocab/TransportEquipment)
 
-This should obviously be generated from the SCRDM model, part of the output of the RDM2API methodology. Similarly, the governance of the various high level groupings (in these examples /edi3-transport) should follow the town plan approach. 
 
 
- 
-# Related Material
-
- * 
- * 
