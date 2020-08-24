@@ -199,8 +199,33 @@ stuff about  version updates here
 
 ## UN/CEFACT metadtaa
 
-stuff about publishing source metadata without corrupting the primary "schema.org style" here
+We provide and publish the machine-readable RDF representation of The CEFACT Buy-Ship-Pay RDM Business Information Elements, preserving their types, inheritance heirarchy and metadata. All rdfs classes and properties in edi3 vocabulary are linked with corresponding BIEs by its identifier. This link can be used to implement a software which automatically maps CEFACT RDM messages to RDF format. So that interoperability between existing systems which use CEFACT RDM and new Linked Data based systems is preserved.
 
+The example rdfs property from the edi3 vocabulary, with linked CEFACT RDM BIEs:
+```json
+{
+  "@id": "edi3:consignorTradeParty",
+  "rdfs:type": "rdfs:Property",
+  "rdfs:domain": "edi3:Consignment",
+  "rdfs:range": "edi3:Party",
+  "edi3:cefactElementMetadata": [
+    {
+      "@id": "cefact:Referenced_SupplyChain_Consignment.Consignor.Trade_Party",
+      "@type": "edi3:AssociationBIE", 
+      "edi3:cefactUNId": "cefact:UN01011054",
+      "edi3:cefactBieDomainClass": "cefact:Referenced_SupplyChain_Consignment.Details",
+      "edi3:cefactBusinessProcess": "Buy-Ship-Pay"
+    },
+    {
+      "@id": "cefact:SupplyChain_Consignment.Consignor.Trade_Party",
+      "@type": "edi3:AssociationBIE", 
+      "edi3:cefactUNId": "cefact:UN01004212",
+      "edi3:cefactBieDomainClass": "cefact:SupplyChain_Consignment.Details",
+      "edi3:cefactBusinessProcess": "Buy-Ship-Pay"
+    },
+  ]
+}
+```
  
 # Examples
 
