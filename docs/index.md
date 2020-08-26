@@ -179,7 +179,42 @@ Stuff about ABIE/BBIE etc -> JSON-LD here
 
 ## Code list representation
 
-Stuff about representation of simple (ie name value/pair) and complex (ie multi-attribute / hierarchical) code lists here
+Domain-specific parts of data model may be goverened and published separately, some of these vocabularies are called "codelists". Such vocabularies sometimes have fairly flat and simple organization, for ex. iso-3166 country codes. But others may have quite complex hierarchical structure with additional metadata, for ex. WCO Harmonized System nomenclature. 
+
+In this section we describe the recommended format for publishing codelists using rdf and json-ld data model. The vocabulary definitions are represented as [flattened json-ld](https://www.w3.org/TR/json-ld/#flattened-document-form) graph:
+
+```json
+{
+  "@context": "https://edi3.org/context.json",
+  "@graph": [
+    { "@id": "iso:AU", "rdfs:label": "Australia" },
+    { "@id": "iso:US", "rdfs:label": "United States of America" },
+    ...
+  ]
+}
+```
+
+RDF graph data model and json-ld representation may be the best format for machine-readable vocabularies available today. Some prominent features are:
+
+* Standartized way to cross-reference, reuse and extend terms from multiple separately governed vocabularies
+* Support for internationalized strings
+* Supports hierarchical model of classes and properties
+* Consistent library of simple data types like bool, int, date and time
+* json-ld is designed to be easily interpreted by human developer, compared to older formats like xml
+
+### Motivation
+
+TODO: does it belong here?
+
+To avoid interoperability disruptions, it is important for communicating systems to have consistent and up-to-date data model to operate on. Given that codelists are regularly updated, maintaining interoperability between several separately developed business applications is a challenging task. 
+
+Unfortunately maintainers often publish codelists in proprietary or machine-unfriendly formats like xls, pdf and html, which require tedious human processing to translate and implement in business logic. It would be beneficial to have an authoritative source of vocabulary definitions in a machine readable format to enable automated processing and allow existing systems to have always up-to-date and consistent view on the data they produce/consume.
+
+TODO: we could discuss somewhere automated mechanisms to distribute updates of machine-readable vocabularies. Differences between push\pull approaches, for ex. CDN vs infrastructure based on WEBSUB hubs?
+
+### Examples of more complex hierarchical codelists
+TODO
+
 
 ## @context granularity
 
@@ -199,8 +234,33 @@ stuff about  version updates here
 
 ## UN/CEFACT metadtaa
 
-stuff about publishing source metadata without corrupting the primary "schema.org style" here
+We provide and publish the machine-readable RDF representation of The CEFACT Buy-Ship-Pay RDM Business Information Elements, preserving their types, inheritance heirarchy and metadata. All rdfs classes and properties in edi3 vocabulary are linked with corresponding BIEs by its identifier. This link can be used to implement a software which automatically maps CEFACT RDM messages to RDF format. So that interoperability between existing systems which use CEFACT RDM and new Linked Data based systems is preserved.
 
+The example rdfs property from the edi3 vocabulary, with linked CEFACT RDM BIEs:
+```json
+{
+  "@id": "edi3:consignorTradeParty",
+  "rdfs:type": "rdfs:Property",
+  "rdfs:domain": "edi3:Consignment",
+  "rdfs:range": "edi3:Party",
+  "edi3:cefactElementMetadata": [
+    {
+      "@id": "cefact:Referenced_SupplyChain_Consignment.Consignor.Trade_Party",
+      "@type": "edi3:AssociationBIE", 
+      "edi3:cefactUNId": "cefact:UN01011054",
+      "edi3:cefactBieDomainClass": "cefact:Referenced_SupplyChain_Consignment.Details",
+      "edi3:cefactBusinessProcess": "Buy-Ship-Pay"
+    },
+    {
+      "@id": "cefact:SupplyChain_Consignment.Consignor.Trade_Party",
+      "@type": "edi3:AssociationBIE", 
+      "edi3:cefactUNId": "cefact:UN01004212",
+      "edi3:cefactBieDomainClass": "cefact:SupplyChain_Consignment.Details",
+      "edi3:cefactBusinessProcess": "Buy-Ship-Pay"
+    },
+  ]
+}
+```
  
 # Examples
 
