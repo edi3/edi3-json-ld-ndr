@@ -212,8 +212,48 @@ Unfortunately maintainers often publish codelists in proprietary or machine-unfr
 
 TODO: we could discuss somewhere automated mechanisms to distribute updates of machine-readable vocabularies. Differences between push\pull approaches, for ex. CDN vs infrastructure based on WEBSUB hubs?
 
-### Examples of more complex hierarchical codelists
-TODO
+### Identifiers
+
+Business application data usually reference entities defined in the codelist vocabulary by its identifier. For example "AU" is an identifier of Australia, defined by iso-3166.
+
+While arbitrary string like "AU" may be good enough identifier in many scenarios, [best practices for data on the web](https://www.w3.org/TR/dwbp/#DataIdentifiers) is to use http URLs as primary identifiers. The advantages of http urls are namespacing and discovery, briefly highlighted below.
+
+#### Namespaces
+
+Sometimes several concurrent codelists exist, which describe similar concepts, for ex. [Vehicle Plate Country codes](https://en.wikipedia.org/wiki/International_vehicle_registration_code) vs iso-3166 country codes. Quite often business applications data have to use a mix of multiple codelists, rendering the used identifiers ambiguous.
+
+To resolve the identifiers ambiguity, we recommend using http urls based on the domain name which is under control of the authoritative group which maintains the codelist vocabualry. For example in place of UNECE rec.21 code "1A", the http url "https://www.unece.org/uncefact/rec21#1A" can be used.
+
+For human convenience, most RDF syntaxes support url shortening. For example, the json-ld representation can use default vocabualry or namespace prefix defined in the context:
+
+Example: default vocabulary makes "1A" to expand to the full url "https://www.unece.org/uncefact/rec21#1A"
+```json
+{
+ "@context": { 
+   "@vocab": "https://www.unece.org/uncefact/rec21#",
+   "typeCode": {"@type": "@vocab"}
+  },
+  "@id": "http://maersk.com/packages/171346",
+  "typeCode": "1A" 
+}
+```
+
+Example: prefix definition makes "rec21:1A" to expand to the full url "https://www.unece.org/uncefact/rec21#1A"
+```json
+{
+ "@context": { 
+   "@vocab": "https://edi3.org/vocab#",
+   "rec21": "https://www.unece.org/uncefact/rec21#",
+   "typeCode": {"@type": "@id"}
+  },
+  "@id": "http://maersk.com/packages/171346",
+  "typeCode": "rec21:1A" 
+}
+```
+
+#### Documentation discovery
+
+It is recommended that dereferencing vocabulary term identifier url in the web browser result (or redirect to) the page, where the human-readable definition of this term can be found.
 
 
 ## @context granularity
