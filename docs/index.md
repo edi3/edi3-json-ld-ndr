@@ -227,6 +227,7 @@ To resolve the identifiers ambiguity, we recommend using http urls based on the 
 For human convenience, most RDF syntaxes support url shortening. For example, the json-ld representation can use default vocabualry or namespace prefix defined in the context:
 
 Example: default vocabulary makes "1A" to expand to the full url "https://www.unece.org/uncefact/rec21#1A"
+
 ```json
 {
  "@context": { 
@@ -239,6 +240,7 @@ Example: default vocabulary makes "1A" to expand to the full url "https://www.un
 ```
 
 Example: prefix definition makes "rec21:1A" to expand to the full url "https://www.unece.org/uncefact/rec21#1A"
+
 ```json
 {
  "@context": { 
@@ -254,6 +256,166 @@ Example: prefix definition makes "rec21:1A" to expand to the full url "https://w
 #### Documentation discovery
 
 It is recommended that dereferencing vocabulary term identifier url in the web browser result (or redirect to) the page, where the human-readable definition of this term can be found.
+
+
+### Data modelling
+
+Entities in the codelist vocabulary might have associated metadata, such as human-readable definition, comments, symbolic representation, and links to other related entities. Each entity can be seen as a node in the RDF graph with assigned primary identifier (http url), and other datatyped or identifier nodes linked to it. In the Subject-Predicate-Object RDF representation, the kg/m² measurement unit can be defined as:
+
+```turtle
+<rec20:kilogram_per_square_meter> <rdfs:comment> "Unit of surface density, areic mass" .
+<rec20:kilogram_per_square_meter> <edi3:unitSymbol> "kg/m²" .
+<rec20:kilogram_per_square_meter> <edi3:uneceRec20Code> "28" .
+```
+
+Which corresponds to the json-ld
+
+```json
+{
+  "@id": "rec20:kilogram_per_square_meter",
+  "rdfs:comment": "Unit of surface density, areic mass",
+  "edi3:uneceRec20Code": "28",
+  "edi3:unitSymbol": "kg/m²"
+}
+```
+
+Predicates used to associate entity with related metadata have their own primary identifier (http url). In the example above the context is omitted, but implied that _rdfs:comment_ and _edi3:uneceRec20Code_ are abbreviated http url identifiers of predicates (properties), which are defined in the rdfs and edi3 vocabularies (see rdfs properties definition below).
+
+#### RDF Schema (RDFS) explainer
+
+[RDF Schema](https://www.w3.org/TR/rdf-schema/) provides the mechanisms for describing groups of related resources (entities) and the relationships between these resources. The RDF Schema class and property system is similar to the type systems of object-oriented programming languages, and modelling languages like UML.
+
+While abstract linked graph view on the data may be useful for simple cases, the RDF Schema provides familiar and powerful semantics of Classes and Properties on top of it. 
+
+##### Classes
+
+Continuing from the example of UNECE rec.20 codes for measurement units, we can divide entities into classes NormativeUnit, NormativeEquivalentUnit, InformativeUnit, which are all subclasses of MeasurementUnit. To achieve that, we should first define a class, and then we can assign that class to the entity (instance of that class). On the RDF level, classes just like instances have unique identifier an can be seen as nodes in the graph.
+
+Example: Base class and its specific subclasses definition
+```turtle
+<edi3:MeasurementUnit> <rdf:type> <rdfs:Class> .
+
+<edi3:NormativeUnit> <rdf:type> <rdfs:Class> .
+<edi3:NormativeUnit> <rdfs:subClassOf> <edi3:MeasurementUnit> .
+
+<edi3:NormativeEquivalentUnit> <rdf:type> <rdfs:Class> .
+<edi3:NormativeEquivalentUnit> <rdfs:subClassOf> <edi3:MeasurementUnit> .
+
+<edi3:InformativeUnit> <rdf:type> <rdfs:Class> .
+<edi3:InformativeUnit> <rdfs:subClassOf> <edi3:MeasurementUnit> .
+```
+
+Now all measurement units can be declared being an instance of appropriate class:
+```turtle
+<rec20:kilogram_per_square_meter> <rdf:type> <edi3:NormativeUnit> .
+<rec20:fahrenheit> <rdf:type> <edi3:NormativeEquivalentUnit> .
+...
+```
+
+##### Properties
+
+On the RDF graph level, predicates (properties) just like classes or instances have unique identifier an can be seen as nodes in the graph. Unlike classes or class instances, the property identifiers can also appear in the predicate position (link between the nodes), specifying the semantic of the relationship between subject and object. RDFS vocabulary allows to define a node as a property, and express restrictions on the valid types of the subject and object which is allowed to be linked by this property (domain and range).
+
+Example: define a property and its domain and range
+```turtle
+<edi3:unitSymbol> <rdf:type> <rdfs:Property> .
+<edi3:unitSymbol> <rdfs:domain> <edi3:MeasurementUnit> .
+<edi3:unitSymbol> <rdfs:range> <xsd:string> .
+```
+
+Now the property can be used to associate measurement unit with its symbol
+```turtle
+<rec20:kilogram_per_square_meter> <edi3:unitSymbol> "kg/m²" .
+```
+
+#### Inferencing
+
+The advanced data consumers can apply RDFS inferencing engine to enrich the input graph data with the additional links (triples), which was omitted, but implied by the rdfs class heirarchy and property domain\range provided in the vocabulary.
+
+For example, the kilogram_per_square_meter was defined as instance of NormativeUnit:
+
+```turtle
+<rec20:kilogram_per_square_meter> <rdf:type> <edi3:NormativeUnit> .
+```
+
+And after applying RDFS inferencing, the new association will be added, saying that kilogram_per_square_meter is also an instance of the base MeasurementUnit class:
+
+```turtle
+<rec20:kilogram_per_square_meter> <rdf:type> <edi3:MeasurementUnit> .
+```
+
+While RDFS inferencing is powerful, it is also computationally complex and hard to implement. It is not recommended to rely on the data consumer inferencing capability in the published data and vocabularies. It is up for particular use case to decide on, but generally it is safer to explicitly declare all types\classes on the instances, and use more generic properties instead of more specific subproperties.
+
+#### RDFS for existing codelists
+
+Some existing codelists combine multiple entity attributes to be "flattened" into a list of unique identifiers. For example UNECE Rec.21 for package types assigns a code "BO" to "Bottle, non-protected, cylindrical", and "XH" to "Bag, textile, water resistant". The brute-force way to express this codelist in machine-readable way would be 1) assign the full http url to each code, 2) associate it with a human-readable description and 3) publish it as flattened graph json-ld
+
+Example: simplest json-ld representation of UNECE Rec.21
+
+```json
+{
+  "@context": {
+    "rec21": "https://unece.org/codelists/rec21#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+  },
+  "@graph": [
+    {
+      "@id": "rec21:1A",
+      "rdfs:comment": "Drum, steel",
+    }, 
+    {
+      "@id": "rec21:1B",
+      "rdfs:comment": "Drum, aluminium",
+    },
+    ... 
+  ]
+}
+```
+
+While the example given above is valid and fulfills the requirement of making the codelist machine-readable in many usecases, it can be improved. Proper use of RDFS annotations can make the codelist vocabulary significantly more convenient to maintain, comprehend and implement in the business logic.
+
+The entities in the rec.21 vocabulary can be quite naturally interpreted as types of package, so they can be declared to be instances of _rdfs:Class_. Also the primary identifier can be made more human-friendly:
+
+```json
+{
+  "@id": "rec21:Drum_steel",
+  "@type": "rdfs:Class",
+  "rdf:value": "1A"
+}
+```
+
+Now the business data producer can assign appropriate rec.21 package class to the subject of interest:
+
+```json
+{
+  "@id": "http://maersk.com/packages/b646-629",
+  "@type": "rec21:Drum_steel"
+}
+```
+
+Many entities in the rec.21 vocabulary could be seen as subclasses of the generic base class, for example all package types listed below can be made subclasses of generic _Pallet_ base class:
+
+```
+Pallet, CHEP 100 cm x 120 cm
+Pallet, AS 4068-1993
+Pallet, ISO T11
+```
+
+The appropriate class heirarchy can help maintainers to organize and visualize the vocabulary and allow business logic applications to choose the generalization level they need to operate on. 
+
+Some entities in the rec.21 vocabulary mix class-level abstraction with properties, such as water resistance or physical dimensions. It would be more natural to define the properties which business data could use to express such attributes:
+
+```json
+{
+  "@id": "rec21:width",
+  "@type": "rdfs:Property",
+  "rdfs:domain": "rec21:BasePackage",
+  "rdfs:range": "xsd:decimal",
+  "rdfs:comment": "physical width of the package, in millimeters"
+}
+```
+
+In some cases, part of the vocabulary such as base classes and properties could be exctracted to form the stable core vocabualry, while keeping other more specific and volatile subclasses and instances to be governed and published separately. Such distinction might be beneficial for maintaining long-term interoperability between codelist users.
 
 
 ## @context granularity
