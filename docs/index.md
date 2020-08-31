@@ -175,12 +175,52 @@ Within this primary goal, there are several more detailed requirements
 
 ## RDM mapping
 
-Cuurent version of vocabualry was automatically generated from the CEFACT Buy-Ship-Pay Reference Data Model xls file, following the rules listed below.
+Current version of vocabualry was automatically generated from the CEFACT Buy-Ship-Pay Reference Data Model xls file, following the rules listed below.
 
-* ABIEs are grouped by `Object Class Term` as RDF Classes
-* BBIEs are grouped by Property Term Qualifier(s)+ Property Term + Datatype Qualifier(s) + Representation Term as RDF Properties
-* ASBIEs are grouped by Property Term Qualifier(s)+ Property Term + Associated Object Class Term Qualifier(s) + Associated Object Class as RDF Properties
+* ABIEs are grouped by `Object Class Term` as RDFS Classes
+* BBIEs are grouped by `Property Term Qualifier(s)` + `Property Term` + `Datatype Qualifier(s)` + `Representation Term` as RDFS Properties
+* ASBIEs are grouped by `Property Term Qualifier(s)` + `Property Term` + `Associated Object Class Term Qualifier(s)` + `Associated Object Class` as RDFS Properties
 
+### De-duplication
+
+The above grouping rules may lead to deduplication of several CEFACT BIEs into single class or property. For example both _SupplyChain_Consignment_ and _Referenced_SupplyChain_Consignment_ BIEs get merged into one _Consignment_ class.
+
+Such deduplication is necessary to make the RDFS modelling guidelines to be unambiguous.
+
+### Primary identifier mapping
+
+Some CEFACT BIEs have explicit primary identifier property, for example Referenced_SupplyChain_Consignment.Identification.Identifier. These properties are omitted in the RDF vocabulary, as RDF data model makes the primary identifier an inherent attribute for each entitiy in the graph.
+
+## UN/CEFACT metadtaa
+
+We provide and publish the machine-readable RDF representation of The CEFACT Buy-Ship-Pay RDM Business Information Elements, preserving their types, inheritance heirarchy and metadata. All rdfs classes and properties in edi3 vocabulary are linked with corresponding BIEs by its identifier. This link can be used to implement a software which automatically maps CEFACT RDM messages to RDF format. So that interoperability between existing systems which use CEFACT RDM and new Linked Data based systems is preserved.
+
+The example rdfs property from the edi3 vocabulary, with linked CEFACT RDM BIEs:
+```json
+{
+  "@id": "edi3:consignorTradeParty",
+  "@type": "rdfs:Property",
+  "rdfs:domain": "edi3:Consignment",
+  "rdfs:range": "edi3:Party",
+  "edi3:cefactElementMetadata": [
+    {
+      "@id": "cefact:Referenced_SupplyChain_Consignment.Consignor.Trade_Party",
+      "@type": "edi3:AssociationBIE", 
+      "edi3:cefactUNId": "cefact:UN01011054",
+      "edi3:cefactBieDomainClass": "cefact:Referenced_SupplyChain_Consignment.Details",
+      "edi3:cefactBusinessProcess": "Buy-Ship-Pay"
+    },
+    {
+      "@id": "cefact:SupplyChain_Consignment.Consignor.Trade_Party",
+      "@type": "edi3:AssociationBIE", 
+      "edi3:cefactUNId": "cefact:UN01004212",
+      "edi3:cefactBieDomainClass": "cefact:SupplyChain_Consignment.Details",
+      "edi3:cefactBusinessProcess": "Buy-Ship-Pay"
+    },
+  ]
+}
+```
+ 
 ## Code list representation
 
 Domain-specific parts of data model may be goverened and published separately, some of these vocabularies are called "codelists". Such vocabularies sometimes have fairly flat and simple organization, for ex. iso-3166 country codes. But others may have quite complex hierarchical structure with additional metadata, for ex. WCO Harmonized System nomenclature. 
@@ -426,48 +466,10 @@ In some cases, part of the vocabulary such as base classes and properties could 
 
 Stuff about granularity of graph publishing here - ie one graph per serpately goverened thing in the source 
 
-## primary @id mapping
-
-stuff about mapping entity ID to JSON-LD @id here
-
-## de-duplication
-
-stuff about de-duplication of properties here
-
 ## versioning
 
 stuff about  version updates here
 
-## UN/CEFACT metadtaa
-
-We provide and publish the machine-readable RDF representation of The CEFACT Buy-Ship-Pay RDM Business Information Elements, preserving their types, inheritance heirarchy and metadata. All rdfs classes and properties in edi3 vocabulary are linked with corresponding BIEs by its identifier. This link can be used to implement a software which automatically maps CEFACT RDM messages to RDF format. So that interoperability between existing systems which use CEFACT RDM and new Linked Data based systems is preserved.
-
-The example rdfs property from the edi3 vocabulary, with linked CEFACT RDM BIEs:
-```json
-{
-  "@id": "edi3:consignorTradeParty",
-  "rdfs:type": "rdfs:Property",
-  "rdfs:domain": "edi3:Consignment",
-  "rdfs:range": "edi3:Party",
-  "edi3:cefactElementMetadata": [
-    {
-      "@id": "cefact:Referenced_SupplyChain_Consignment.Consignor.Trade_Party",
-      "@type": "edi3:AssociationBIE", 
-      "edi3:cefactUNId": "cefact:UN01011054",
-      "edi3:cefactBieDomainClass": "cefact:Referenced_SupplyChain_Consignment.Details",
-      "edi3:cefactBusinessProcess": "Buy-Ship-Pay"
-    },
-    {
-      "@id": "cefact:SupplyChain_Consignment.Consignor.Trade_Party",
-      "@type": "edi3:AssociationBIE", 
-      "edi3:cefactUNId": "cefact:UN01004212",
-      "edi3:cefactBieDomainClass": "cefact:SupplyChain_Consignment.Details",
-      "edi3:cefactBusinessProcess": "Buy-Ship-Pay"
-    },
-  ]
-}
-```
- 
 # Examples
 
 
