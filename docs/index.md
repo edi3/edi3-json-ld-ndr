@@ -175,7 +175,11 @@ Within this primary goal, there are several more detailed requirements
 
 ## RDM mapping
 
-Stuff about ABIE/BBIE etc -> JSON-LD here
+Cuurent version of vocabualry was automatically generated from the CEFACT Buy-Ship-Pay Reference Data Model xls file, following the rules listed below.
+
+* ABIEs are grouped by `Object Class Term` as RDF Classes
+* BBIEs are grouped by Property Term Qualifier(s)+ Property Term + Datatype Qualifier(s) + Representation Term as RDF Properties
+* ASBIEs are grouped by Property Term Qualifier(s)+ Property Term + Associated Object Class Term Qualifier(s) + Associated Object Class as RDF Properties
 
 ## Code list representation
 
