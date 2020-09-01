@@ -221,6 +221,44 @@ The example rdfs property from the edi3 vocabulary, with linked CEFACT RDM BIEs:
 }
 ```
  
+ 
+## Business domain granularity
+
+The vocabulary terms are annotated with the logical business domain which this term belongs to:
+
+```json
+{
+  "@id": "edi3:consignorTradeParty",
+  "@type": "rdfs:Property",
+  "edi3:businessDomain": "Trade"
+}
+```
+
+TODO: The formal process of assigning the business domain to the vocabulary terms is to be decided.
+
+## Versioning
+
+The vocabulary is updated every 6 months, following the maintainance cycle of the CEFACT BSP RDM.
+Each BIE is annotated with the date when it was created, current active\deprecated status, and the date of deprecation.
+
+```json
+{
+    "@id": "SupplyChain_Consignment.Consignor.Trade_Party",
+    "@type": "edi3:AssociationBIE", 
+    "@edi3:cefactUNId": "cefact:UN01004212",
+    "edi3:currentStatus":"deprecated",
+    "edi3:createdDate": "01-04-2017",
+    "edi3:deprecatedDate": "21-03-2020"
+}
+```
+
+Each rdfs class and property in the vocabualry is annotated the same way. The rdfs class or property can only be deprecated when all the RDM BIEs it is linked to are deprecated.
+
+Every time when the vocabulary is updated from the new version of BSP RDM, the new json-ld context file for this vocabualry is created, and published at the new permanent url, e.g https://edi3.org/vocab/2020.09/context.json
+
+TODO: the exact url for the context is to be decided.
+
+
 ## Code list representation
 
 Domain-specific parts of data model may be goverened and published separately, some of these vocabularies are called "codelists". Such vocabularies sometimes have fairly flat and simple organization, for ex. iso-3166 country codes. But others may have quite complex hierarchical structure with additional metadata, for ex. WCO Harmonized System nomenclature. 
@@ -229,7 +267,7 @@ In this section we describe the recommended format for publishing codelists usin
 
 ```json
 {
-  "@context": "https://edi3.org/context.json",
+  "@context": "https://edi3.org/vocab/2020.09/context.json",
   "@graph": [
     { "@id": "iso:AU", "rdfs:label": "Australia" },
     { "@id": "iso:US", "rdfs:label": "United States of America" },
@@ -461,14 +499,6 @@ Some entities in the rec.21 vocabulary mix class-level abstraction with properti
 
 In some cases, part of the vocabulary such as base classes and properties could be exctracted to form the stable core vocabualry, while keeping other more specific and volatile subclasses and instances to be governed and published separately. Such distinction might be beneficial for maintaining long-term interoperability between codelist users.
 
-
-## @context granularity
-
-Stuff about granularity of graph publishing here - ie one graph per serpately goverened thing in the source 
-
-## versioning
-
-stuff about  version updates here
 
 # Examples
 
