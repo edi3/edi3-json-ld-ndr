@@ -175,7 +175,89 @@ Within this primary goal, there are several more detailed requirements
 
 ## RDM mapping
 
-Stuff about ABIE/BBIE etc -> JSON-LD here
+Current version of vocabualry was automatically generated from the CEFACT Buy-Ship-Pay Reference Data Model xls file, following the rules listed below.
+
+* ABIEs are grouped by `Object Class Term` as RDFS Classes
+* BBIEs are grouped by `Property Term Qualifier(s)` + `Property Term` + `Datatype Qualifier(s)` + `Representation Term` as RDFS Properties
+* ASBIEs are grouped by `Property Term Qualifier(s)` + `Property Term` + `Associated Object Class Term Qualifier(s)` + `Associated Object Class` as RDFS Properties
+
+### De-duplication
+
+The above grouping rules may lead to deduplication of several CEFACT BIEs into single class or property. For example both _SupplyChain_Consignment_ and _Referenced_SupplyChain_Consignment_ BIEs get merged into one _Consignment_ class.
+
+Such deduplication is necessary to make the RDFS modelling guidelines to be unambiguous.
+
+### Primary identifier mapping
+
+Some CEFACT BIEs have explicit primary identifier property, for example Referenced_SupplyChain_Consignment.Identification.Identifier. These properties are omitted in the RDF vocabulary, as RDF data model makes the primary identifier an inherent attribute for each entitiy in the graph.
+
+## UN/CEFACT metadtaa
+
+We provide and publish the machine-readable RDF representation of The CEFACT Buy-Ship-Pay RDM Business Information Elements, preserving their types, inheritance heirarchy and metadata. All rdfs classes and properties in edi3 vocabulary are linked with corresponding BIEs by its identifier. This link can be used to implement a software which automatically maps CEFACT RDM messages to RDF format. So that interoperability between existing systems which use CEFACT RDM and new Linked Data based systems is preserved.
+
+The example rdfs property from the edi3 vocabulary, with linked CEFACT RDM BIEs:
+```json
+{
+  "@id": "edi3:consignorTradeParty",
+  "@type": "rdfs:Property",
+  "rdfs:domain": "edi3:Consignment",
+  "rdfs:range": "edi3:Party",
+  "edi3:cefactElementMetadata": [
+    {
+      "@id": "cefact:Referenced_SupplyChain_Consignment.Consignor.Trade_Party",
+      "@type": "edi3:AssociationBIE", 
+      "edi3:cefactUNId": "cefact:UN01011054",
+      "edi3:cefactBieDomainClass": "cefact:Referenced_SupplyChain_Consignment.Details",
+      "edi3:cefactBusinessProcess": "Buy-Ship-Pay"
+    },
+    {
+      "@id": "cefact:SupplyChain_Consignment.Consignor.Trade_Party",
+      "@type": "edi3:AssociationBIE", 
+      "edi3:cefactUNId": "cefact:UN01004212",
+      "edi3:cefactBieDomainClass": "cefact:SupplyChain_Consignment.Details",
+      "edi3:cefactBusinessProcess": "Buy-Ship-Pay"
+    },
+  ]
+}
+```
+ 
+ 
+## Business domain granularity
+
+The vocabulary terms are annotated with the logical business domain which this term belongs to:
+
+```json
+{
+  "@id": "edi3:consignorTradeParty",
+  "@type": "rdfs:Property",
+  "edi3:businessDomain": "Trade"
+}
+```
+
+TODO: The formal process of assigning the business domain to the vocabulary terms is to be decided.
+
+## Versioning
+
+The vocabulary is updated every 6 months, following the maintainance cycle of the CEFACT BSP RDM.
+Each BIE is annotated with the date when it was created, current active\deprecated status, and the date of deprecation.
+
+```json
+{
+    "@id": "SupplyChain_Consignment.Consignor.Trade_Party",
+    "@type": "edi3:AssociationBIE", 
+    "@edi3:cefactUNId": "cefact:UN01004212",
+    "edi3:currentStatus":"deprecated",
+    "edi3:createdDate": "01-04-2017",
+    "edi3:deprecatedDate": "21-03-2020"
+}
+```
+
+Each rdfs class and property in the vocabualry is annotated the same way. The rdfs class or property can only be deprecated when all the RDM BIEs it is linked to are deprecated.
+
+Every time when the vocabulary is updated from the new version of BSP RDM, the new json-ld context file for this vocabualry is created, and published at the new permanent url, e.g https://edi3.org/vocab/2020.09/context.json
+
+TODO: the exact url for the context is to be decided.
+
 
 ## Code list representation
 
@@ -185,7 +267,7 @@ In this section we describe the recommended format for publishing codelists usin
 
 ```json
 {
-  "@context": "https://edi3.org/context.json",
+  "@context": "https://edi3.org/vocab/2020.09/context.json",
   "@graph": [
     { "@id": "iso:AU", "rdfs:label": "Australia" },
     { "@id": "iso:US", "rdfs:label": "United States of America" },
@@ -418,52 +500,6 @@ Some entities in the rec.21 vocabulary mix class-level abstraction with properti
 In some cases, part of the vocabulary such as base classes and properties could be exctracted to form the stable core vocabualry, while keeping other more specific and volatile subclasses and instances to be governed and published separately. Such distinction might be beneficial for maintaining long-term interoperability between codelist users.
 
 
-## @context granularity
-
-Stuff about granularity of graph publishing here - ie one graph per serpately goverened thing in the source 
-
-## primary @id mapping
-
-stuff about mapping entity ID to JSON-LD @id here
-
-## de-duplication
-
-stuff about de-duplication of properties here
-
-## versioning
-
-stuff about  version updates here
-
-## UN/CEFACT metadtaa
-
-We provide and publish the machine-readable RDF representation of The CEFACT Buy-Ship-Pay RDM Business Information Elements, preserving their types, inheritance heirarchy and metadata. All rdfs classes and properties in edi3 vocabulary are linked with corresponding BIEs by its identifier. This link can be used to implement a software which automatically maps CEFACT RDM messages to RDF format. So that interoperability between existing systems which use CEFACT RDM and new Linked Data based systems is preserved.
-
-The example rdfs property from the edi3 vocabulary, with linked CEFACT RDM BIEs:
-```json
-{
-  "@id": "edi3:consignorTradeParty",
-  "rdfs:type": "rdfs:Property",
-  "rdfs:domain": "edi3:Consignment",
-  "rdfs:range": "edi3:Party",
-  "edi3:cefactElementMetadata": [
-    {
-      "@id": "cefact:Referenced_SupplyChain_Consignment.Consignor.Trade_Party",
-      "@type": "edi3:AssociationBIE", 
-      "edi3:cefactUNId": "cefact:UN01011054",
-      "edi3:cefactBieDomainClass": "cefact:Referenced_SupplyChain_Consignment.Details",
-      "edi3:cefactBusinessProcess": "Buy-Ship-Pay"
-    },
-    {
-      "@id": "cefact:SupplyChain_Consignment.Consignor.Trade_Party",
-      "@type": "edi3:AssociationBIE", 
-      "edi3:cefactUNId": "cefact:UN01004212",
-      "edi3:cefactBieDomainClass": "cefact:SupplyChain_Consignment.Details",
-      "edi3:cefactBusinessProcess": "Buy-Ship-Pay"
-    },
-  ]
-}
-```
- 
 # Examples
 
 
