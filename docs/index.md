@@ -3,12 +3,13 @@ title: "edi3 JSON-LD NDR 1.0 Specification"
 specID: "json-ld-ndr/1"
 status: "![raw](https://rfc.unprotocols.org/spec:2/COSS/raw.svg)"
 editors: "[Nis Jespersen](mailto:nis.jespersen@maerskgtd.com)"
-contributors: "[Steven Capell](mailto:steve.capell@gmail.com)"
+contributors: "[Steven Capell](mailto:steve.capell@gmail.com)",
+              "[Roman Estifeev](mailto:someuniquename@gmail.com)"
 ---
 
 ## Status
 
-Raw 
+Draft
 
 ## Glossary
 
