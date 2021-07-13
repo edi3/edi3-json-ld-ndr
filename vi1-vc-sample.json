@@ -7,9 +7,10 @@
       "TradeLineItem": {
         "@id": "uncefact:TradeLineItem",
         "@context": {
-          "@vocab": "https://edi3.org/vocabulary/uncefact/#",
           "@propagate": true,
           "@protected": true,
+          "@vocab": "https://edi3.org/vocabulary/uncefact/#",
+          "rec28": "https://edi3.org/vocabulary/rec28/#",
           "parentConsignment": {
               "@reverse": "includedConsignmentItem"
           }
@@ -75,6 +76,12 @@
             "unloadingLocation": {
                 "countryId": "UK",
                 "name": "Gnangemouth"
+            },
+            "applicableTransportMeans": {
+                "@id": "https://maersk.com/vessels/123-456",
+                "@type": "TranstportMeans",
+                "transportMeansTypeCode": "rec28:General_cargo_vessel",
+                "name": "Ever Given"
             }
         }
     },
