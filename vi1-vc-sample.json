@@ -99,6 +99,10 @@
         {
           "typeCode": "totalAcidity",
           "valueMeasure": 5.14
+        },
+        {
+          "typeCode": "totalSulphurDioxide",
+          "valueMeasure": 80.00
         }
       ]
     }
