@@ -91,6 +91,7 @@
       "brandName": "Wine of Australia",
       "description": "(12 x 750ml) Red 2019 South Australia Merlot",
       "actualQuantity": ["2520 l", "3360 bottles"],
+      "certificationEvidenceReferenceDocument": "https://www.agw.org.au/certificates/PSA16312",
       "applicableCharacteristic": [
         {
           "typeCode": "totalAlcoholicStrength",
