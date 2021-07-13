@@ -89,6 +89,7 @@
       "@id": "example:wineProduct1",
       "@type": "Product",
       "brandName": "Wine of Australia",
+      "description": "(12 x 750ml) Red 2019 South Australia Merlot",
       "applicableCharacteristic": [
         {
           "typeCode": "totalAlcoholicStrength",
