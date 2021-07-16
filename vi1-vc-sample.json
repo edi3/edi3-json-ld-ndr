@@ -11,6 +11,8 @@
           "@protected": true,
           "@vocab": "https://edi3.org/vocabulary/uncefact/#",
           "rec28": "https://edi3.org/vocabulary/rec28/#",
+          "qudt": "https://qudt.org/schema/qudt/",
+          "unit": "http://qudt.org/vocab/unit/",
           "parentConsignment": {
               "@reverse": "includedConsignmentItem"
           }
@@ -90,7 +92,12 @@
       "@type": "Product",
       "brandName": "Wine of Australia",
       "description": "(12 x 750ml) Red 2019 South Australia Merlot",
-      "actualQuantity": ["2520 l", "3360 bottles"],
+      "unitTypeCode": "bottle",
+      "contentUnitQuantity": 3360,
+      "qudt:hasQuantity": {
+        "qudt:unit": "unit:L",
+        "qudt:value": 2520.0
+      },
       "certificationEvidenceReferenceDocument": "https://www.agw.org.au/certificates/PSA16312",
       "applicableCharacteristic": [
         {
