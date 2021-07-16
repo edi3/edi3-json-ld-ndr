@@ -1,0 +1,138 @@
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    {
+      "uncefact": "https://edi3.org/vocabulary/uncefact/#",
+      "version": "http://www.w3.org/ns/odrl/2/version",
+      "TradeLineItem": {
+        "@id": "uncefact:TradeLineItem",
+        "@context": {
+          "@propagate": true,
+          "@protected": true,
+          "@vocab": "https://edi3.org/vocabulary/uncefact/#",
+          "rec28": "https://edi3.org/vocabulary/rec28/#",
+          "qudt": "https://qudt.org/schema/qudt/",
+          "unit": "http://qudt.org/vocab/unit/",
+          "parentConsignment": {
+              "@reverse": "includedConsignmentItem"
+          }
+        }
+      }
+    }
+  ],
+  "name": "VI1 Document for the Importation of wine into the European community",
+  "issuanceDate": "2010-01-01T19:23:24Z",
+  "validFrom": "2010-01-01T19:23:24Z",
+  "issuer": {
+    "id": "https://example.com",
+    "@type": "OpenAttestationIssuer",
+    "name": "DEMO STORE"
+  },
+  "type": ["VerifiableCredential", "OpenAttestationCredential", "VI1Credential"],
+  "credentialSubject": {
+      "@id": "example:wineTradeItem1",
+      "@type": "TradeLineItem",
+      "associatedDocument": {
+          "@type": "Document",
+          "issueDateTime": "2019-08-08T00:00:00Z",
+          "name": "VI1 Document for the Importation of wine into the European community",
+          "issuerAssignedIdentificationId": "A967733",
+          "issueLocation": {
+            "countryId": "AU",
+            "postalAddress": {
+                "streetName": "Cnr Hackney & Botanic roads",
+                "cityName": "Adelaide SA",
+                "postcodeCode": "5000"
+            }
+          },
+          "issuerParty": {
+            "@id": "https://www.agw.org.au/",
+            "name": "Australian Grape and Wine Authority Industry House"
+          }
+      },
+      "includedWithinConsignmentItem": {
+          "@id": "example:consignmentItem",
+          "@type": "ConsignmentItem",
+          "exportCountry": "unlocode:AU",
+          "parentConsignment": {
+            "@id": "example:consignment",
+            "@type": "Consignment",
+            "consigneeParty": {
+                "name": "Alliance Wine Co LTD",
+                "countryId": "unlocode:UK",
+                "postalAddress": {
+                    "streetName": "7 Beechfield Rd",
+                    "cityName": "Ayshire, Beith",
+                    "postcodeCode": "KA15 1LN"
+                }
+            },
+            "exporterParty": {
+                "name": "ALLIANCE WINE AUSTRALIA PTY LTD",
+                "countryId": "unlocode:AU",
+                "postalAddress": {
+                    "streetName": "160 May Terrace",
+                    "cityName": "Ottoway SA",
+                    "postcodeCode": "5013"
+                }
+            },
+            "unloadingLocation": {
+                "countryId": "UK",
+                "name": "Gnangemouth"
+            },
+            "applicableTransportMeans": {
+                "@id": "https://maersk.com/vessels/123-456",
+                "@type": "TranstportMeans",
+                "transportMeansTypeCode": "rec28:General_cargo_vessel",
+                "name": "Ever Given"
+            }
+        }
+    },
+    "specifiedProduct": {
+      "@id": "example:wineProduct1",
+      "@type": "Product",
+      "brandName": "Wine of Australia",
+      "description": "(12 x 750ml) Red 2019 South Australia Merlot",
+      "unitTypeCode": "bottle",
+      "contentUnitQuantity": 3360,
+      "qudt:hasQuantity": {
+        "qudt:unit": "unit:L",
+        "qudt:value": 2520.0
+      },
+      "certificationEvidenceReferenceDocument": "https://www.agw.org.au/certificates/PSA16312",
+      "applicableCharacteristic": [
+        {
+          "typeCode": "totalAlcoholicStrength",
+          "valueMeasure": 14.4
+        },
+        {
+          "typeCode": "totalAcidity",
+          "valueMeasure": 5.14
+        },
+        {
+          "typeCode": "totalSulphurDioxide",
+          "valueMeasure": 80.00
+        }
+      ]
+    }
+  },
+  "openAttestationMetadata": {
+    "template": {
+      "name": "CUSTOM_TEMPLATE",
+      "type": "EMBEDDED_RENDERER",
+      "url": "https://tutorial-renderer.openattestation.com"
+    },
+    "proof": {
+      "type": "OpenAttestationProofMethod",
+      "method": "DID",
+      "value": "did:ethr:0xE712878f6E8d5d4F9e87E10DA604F9cB564C9a89",
+      "revocation": {
+        "type": "NONE"
+      }
+    },
+    "identityProof": {
+      "type": "DNS-DID",
+      "identifier": "example.tradetrust.io"
+    }
+  },
+  "attachments": [{ "fileName": "sample.pdf", "mimeType": "application/pdf", "data": "BASE64_ENCODED_FILE" }]
+}
